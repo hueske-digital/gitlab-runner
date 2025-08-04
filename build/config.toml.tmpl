@@ -1,0 +1,25 @@
+concurrent = {{ getenv "RUNNER_CONCURRENT" "5" }}
+check_interval = 0
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "{{ getenv "RUNNER_NAME" "local-runner" }}"
+  url = "{{ getenv "RUNNER_URL" "https://gitlab.com" }}"
+  id = {{ getenv "RUNNER_ID" }}
+  token = "{{ getenv "RUNNER_TOKEN" }}"
+  token_obtained_at = 2024-12-03T17:39:31Z
+  token_expires_at = 0001-01-01T00:00:00Z
+  executor = "docker"
+  [runners.docker]
+    tls_verify = false
+    image = "{{ getenv "RUNNER_DEFAULT_IMAGE" "alpine:latest" }}"
+    privileged = true
+    disable_entrypoint_overwrite = false
+    oom_kill_disable = false
+    disable_cache = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    shm_size = 0
+    network_mtu = 0
